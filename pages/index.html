@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticketmaster Analysis: Rock Concerts</title>
+    <h1>Ticketmaster Analysis: Rock Concerts</h1>
+    <style>
+        body {
+            text-align: center;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .overview {
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .overview h1 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .overview p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .link-wrapper {
+            margin-bottom: 40px;
+        }
+        .link-wrapper a, .link-wrapper h2 {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+        }
+        .link-wrapper a:hover {
+            background-color: #0056b3;
+        }
+        .image-wrapper {
+            margin: 20px auto;
+            display: block;
+            width: 90%;
+            max-width: 600px;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        .feedback {
+            margin-top: 10px;
+        }
+        .thumbs-up, .thumbs-down {
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        .count {
+            margin-left: 5px;
+        }
+        @media (min-width: 768px) {
+            .image-wrapper {
+                width: calc(50% - 40px);
+                display: inline-block;
+            }
+        }
+        @media (min-width: 1024px) {
+            .image-wrapper {
+                width: calc(33.33% - 40px);
+            }
+        }
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox img {
+            max-width: 80%;
+            max-height: 80%;
+            margin: auto;
+            display: block;
+            /* Preserve aspect ratio */
+            height: auto;
+            object-fit: contain; /* This ensures the image is scaled to maintain its aspect ratio while fitting within the element's box. */
+        }
+    </style>
+</head>
+<body>
+    <div class="overview">
+        <p>Welcome to our website! For our Cloud Computing class for our Masters in Business Analytics program at Cal Poly, we created this website to highlight our skills in AWS data analytics. In this project, we analyze data from Ticketmaster regarding rock concerts. Our analysis is updated daily by pulling from the Ticketmaster API.</p>
+        <p>By: Alexa Hildebrand, Eva Murdock, Daniel Hill, Toby Guenthner, Fernando Fonseca</p>
+    </div>
+    <h2>Interactive Map:</h2>
+    <div class="link-wrapper">
+        <a href="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.us-west-2.amazonaws.com/your_map.html" download="InteractiveEventsMap.html">Click here to download</a>
+    </div>
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/popular_venue.png" alt="Popular Venue">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/expensive_venue.png" alt="Expensive Venue">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/high_median_venue.png" alt="High Median Venue">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/max_city.png" alt="Max City">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/max_diff_event_day.png" alt="Max Difference Event Day">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/max_over_time.png" alt="Max Over Time">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/max_price_by_day.png" alt="Max Price By Day">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/min_diff_event_day.png" alt="Min Difference Event Day">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/min_price_by_day.png" alt="Min Price By Day">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/complete_correlation.png" alt="Complete Correlation">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+<div class="image-wrapper">
+    <img src="https://finalcloudprojectv2stack-finaldataca7db91c-2y2wmpqdodrs.s3.amazonaws.com/images/price_change.png" alt="Price Change">
+    <div class="feedback">
+        <span class="thumbs-up" onclick="increaseCount(this)">👍 <span class="count">0</span></span>
+        <span class="thumbs-down" onclick="increaseCount(this)">👎 <span class="count">0</span></span>
+    </div>
+</div>
+
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="Expanded view">
+    </div>
+    
+     <script>
+    function openLightbox(src) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox').style.display = 'flex';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').style.display = 'none';
+    }
+
+    document.querySelectorAll('.image-wrapper img').forEach(image => {
+        image.addEventListener('click', function() {
+            openLightbox(this.src);
+        });
+    });
+
+    function increaseCount(element) {
+        let countElement = element.querySelector('.count');
+        let currentCount = parseInt(countElement.textContent, 10);
+        countElement.textContent = currentCount + 1;
+    }
+    </script>
+</body>
+</html>
